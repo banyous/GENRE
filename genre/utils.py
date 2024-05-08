@@ -3,7 +3,7 @@
 #
 # This source code is licensed under the license found in the
 # LICENSE file in the root directory of this source tree.
-
+import torch
 import html
 import re
 import xml.etree.ElementTree as ET
@@ -480,7 +480,7 @@ def get_wikidata_ids(
             return search_wikidata(result, label_or_alias2wikidataID), "wikidata"
 
 
-def post_process_wikidata(outputs, text_to_id=False, marginalize=False):
+def post_process_wikidata(outputs, batched_hypos,  text_to_id=False, marginalize=False):
 
     if text_to_id:
         outputs = [
@@ -506,7 +506,7 @@ def post_process_wikidata(outputs, text_to_id=False, marginalize=False):
                                 [
                                     hypo["score"]
                                     * hypo["len"]
-                                    / (hypo["len"] ** marginalize_lenpen)
+                                    / (hypo["len"] ** 0.5)
                                     for hypo in hypos
                                 ]
                             ).logsumexp(-1),
