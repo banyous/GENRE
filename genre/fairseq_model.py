@@ -51,7 +51,7 @@ class _GENREHubInterface:
         ]
 
         outputs = post_process_wikidata(
-            outputs, text_to_id=text_to_id, marginalize=marginalize
+            outputs, batched_hypos, text_to_id=text_to_id, marginalize=marginalize
         )
 
         return outputs
